@@ -25,49 +25,49 @@ type
   {$ENDIF}
 
   TAsn1TagClasses =
-	(
-		asn1Universal       = 0,
-		asn1Application     = 1,
-		asn1ContextSpecific = 2,
-		asn1Private         = 3
-	);
+  (
+    asn1Universal       = 0,
+    asn1Application     = 1,
+    asn1ContextSpecific = 2,
+    asn1Private         = 3
+  );
 
-	TAsn1TagConstructed =
-	(
-		asn1Primitive       = 0,
-		asn1Constructed     = 1
-	);
+  TAsn1TagConstructed =
+  (
+    asn1Primitive       = 0,
+    asn1Constructed     = 1
+  );
 
-	TAsn1UniversalTags =
-	(
-		asn1Eoc					    = $00, //0: End-of-contents octets
-		asn1Boolean			  	= $01, //1: Boolean
-		asn1Integer			   	= $02, //2: Integer
-		asn1BitString			  = $03, //3: Bit string
-		asn1OctetString			= $04, //4: Byte string
-		asn1NullTag				  = $05, //5: Null
-		asn1Oid					    = $06, //6: Object Identifier
-		asn1ObjDescriptor		= $07, //7: Object Descriptor
-		asn1External			  = $08, //8: External
-		asn1Real				    = $09, //9: Real
-		asn1Enumerated			= $0A, //10: Enumerated
-		asn1Embedded_Pdv		= $0B, //11: Embedded Presentation Data Value
-		asn1Utf8String			= $0C, //12: UTF8 string
-		asn1Sequence			  = $10, //16: Sequence/sequence of
-		asn1Set					    = $11, //17: Set/set of
-		asn1NumericString		= $12, //18: Numeric string
-		asn1PrintableString	= $13, //19: Printable string (ASCII subset)
-		asn1T61String			  = $14, //20: T61/Teletex string
-		asn1VideotexString	= $15, //21: Videotex string
-		asn1IA5String			  = $16, //22: IA5/ASCII string
-		asn1UtcTime				  = $17, //23: UTC time
-		asn1GeneralizedTime	= $18, //24: Generalized time
-		asn1GraphicString		= $19, //25: Graphic string
-		asn1VisibleString		= $1A, //26: Visible string (ASCII subset)
-		asn1GeneralString		= $1B, //27: General string
-		asn1UniversalString = $1C, //28: Universal string
-		asn1BmpString			  = $1E  //30: Basic Multilingual Plane/Unicode string
-	);
+  TAsn1UniversalTags =
+  (
+    asn1Eoc             = $00, //0: End-of-contents octets
+    asn1Boolean         = $01, //1: Boolean
+    asn1Integer         = $02, //2: Integer
+    asn1BitString       = $03, //3: Bit string
+    asn1OctetString     = $04, //4: Byte string
+    asn1NullTag         = $05, //5: Null
+    asn1Oid             = $06, //6: Object Identifier
+    asn1ObjDescriptor   = $07, //7: Object Descriptor
+    asn1External        = $08, //8: External
+    asn1Real            = $09, //9: Real
+    asn1Enumerated      = $0A, //10: Enumerated
+    asn1Embedded_Pdv    = $0B, //11: Embedded Presentation Data Value
+    asn1Utf8String      = $0C, //12: UTF8 string
+    asn1Sequence        = $10, //16: Sequence/sequence of
+    asn1Set             = $11, //17: Set/set of
+    asn1NumericString   = $12, //18: Numeric string
+    asn1PrintableString = $13, //19: Printable string (ASCII subset)
+    asn1T61String       = $14, //20: T61/Teletex string
+    asn1VideotexString  = $15, //21: Videotex string
+    asn1IA5String       = $16, //22: IA5/ASCII string
+    asn1UtcTime         = $17, //23: UTC time
+    asn1GeneralizedTime = $18, //24: Generalized time
+    asn1GraphicString   = $19, //25: Graphic string
+    asn1VisibleString   = $1A, //26: Visible string (ASCII subset)
+    asn1GeneralString   = $1B, //27: General string
+    asn1UniversalString = $1C, //28: Universal string
+    asn1BmpString       = $1E  //30: Basic Multilingual Plane/Unicode string
+  );
 
 const
   ASN1_ERROR_NONE    = $00;
@@ -77,15 +77,15 @@ const
 type
   PAsn1Item = ^TAsn1Item;
   TAsn1Item = record
-		TagClass: TAsn1TagClasses;
+    TagClass: TAsn1TagClasses;
     TagConstructedFlag: TAsn1TagConstructed;
-		Tag: TAsn1UniversalTags;
-		TagName: string;
+    Tag: TAsn1UniversalTags;
+    TagName: string;
     Encapsulates: Boolean;
     Offset: Integer;
-		HeaderLength: Integer;
-		Length: Integer;
-		Bytes: RawByteString;
+    HeaderLength: Integer;
+    Length: Integer;
+    Bytes: RawByteString;
     ErrorMessage: string;
     ErrorSeverity: Integer;
   end;
@@ -118,14 +118,14 @@ const
   Asn1ParserDefaultOutputOptions = [asn1OutputClass, asn1OutputEncapsulates, asn1OutputOffset, asn1OutputLength, asn1OutputHeaderLength, asn1OutputRaw];
 
 type
-	TAsn1Parser = class(TPersistent)
-	private
+  TAsn1Parser = class(TPersistent)
+    private
     FErrors: TStrings;
     FExceptionSeverity: Integer;
     FIgnoreErrors: Boolean;
     FOutputOptions: TAsn1ParserOutputOptions;
     FRootName: string;
-		FTree: IXmlDomElement;
+    FTree: IXmlDomElement;
   protected
     function  IsText(S: RawByteString): string;
     function  ParseItem(const Data: RawByteString; var Index: Integer; var Item: TAsn1Item): Boolean;
@@ -135,15 +135,15 @@ type
   public
     constructor Create;
     destructor Destroy; override;
-		procedure Parse(const S: RawByteString); overload;
+    procedure Parse(const S: RawByteString); overload;
     procedure Parse(Stream: TStream); overload;
     procedure ParseFile(const FileName: string);
     property  Errors: TStrings read FErrors;
     property  ExceptionSeverity: Integer read FExceptionSeverity write FExceptionSeverity default ASN1_ERROR_FATAL;
     property  OutputOptions: TAsn1ParserOutputOptions read FOutputOptions write FOutputOptions default Asn1ParserDefaultOutputOptions;
     property  RootName: string read FRootName write FRootName;
-		property  Tree: IXmlDomElement read FTree;
-	end;
+    property  Tree: IXmlDomElement read FTree;
+  end;
 
   Asn1 = class
   public
@@ -157,21 +157,21 @@ type
 
 const
   Asn1TagClasses: array[TAsn1TagClasses] of string =
-	(
-		'Universal',
-		'Application',
-		'ContextSpecific',
-		'Private'
-	);
+  (    
+    'Universal',
+    'Application',
+    'ContextSpecific',
+    'Private'
+  );
 
-	Asn1TagConstructed: array[TAsn1TagConstructed] of string =
-	(
-		'Primitive',
-		'Constructed'
-	);
+  Asn1TagConstructed: array[TAsn1TagConstructed] of string =
+  (
+    'Primitive',
+    'Constructed'
+  );
 
-	Asn1UniversalTags: array[TAsn1UniversalTags] of string =
-	(
+  Asn1UniversalTags: array[TAsn1UniversalTags] of string =
+  (
 		'Eoc',
 		'Boolean',
 		'Integer',
@@ -185,9 +185,9 @@ const
 		'Enumerated',
 		'Embedded_Pdv',
 		'Utf8String',
-    '',
-    '',
-    '',
+		'',
+		'',
+		'',
 		'Sequence',
 		'Set',
 		'NumericString',
@@ -201,9 +201,9 @@ const
 		'VisibleString',
 		'GeneralString',
 		'UniversalString',
-    '',
+		'',
 		'BmpString'
-	);
+  );
 
 implementation
 
@@ -218,7 +218,7 @@ const
 
 { Asn1 }
 
-//TODO: Not tested yet 
+//TODO: Not tested yet
 class function Asn1.DecodeUniversalString(const Data: RawByteString): UnicodeString;
 var
   Char: Word;
@@ -317,13 +317,13 @@ var
 
   procedure MakeBase128(SID: Cardinal; First: Boolean);
   begin
-	  if SID > 127 then
-		  MakeBase128( SID div 128, False);
+    if SID > 127 then
+      MakeBase128( SID div 128, False);
 
-	  SID := SID mod 128;
-	  if First then
+    SID := SID mod 128;
+    if First then
       Byte(S[C]) := Byte(SID)
-  	else
+    else
       Byte(S[C]) := Bit8Mask or Byte(SID);
     Inc(C);
   end;
@@ -593,8 +593,8 @@ var
   UnusedBits, Bitmask, BitCounter: Byte;
 begin
   Index := 1;
-	while Index < Length(S) do
-	begin
+    while Index < Length(S) do
+    begin
     Value := '';
 
     if Parent = nil then
